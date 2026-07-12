@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["schema_version", "task_id", "verdict", "scope_check", "criteria", "verification", "findings", "missing_evidence", "audited_paths", "summary"],
+  "properties": {
+    "schema_version": {"const": 1},
+    "task_id": {"type": "string"},
+    "verdict": {"enum": ["PASS", "FAIL", "BLOCKED"]},
+    "scope_check": {"type": "object"},
+    "criteria": {"type": "array"},
+    "verification": {"type": "array"},
+    "findings": {"type": "array"},
+    "missing_evidence": {"type": "array"},
+    "audited_paths": {"type": "array"},
+    "summary": {"type": "string"}
+  }
+}

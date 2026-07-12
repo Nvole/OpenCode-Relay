@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["task_id", "status", "changed_paths", "commands_run", "verification_results", "acceptance_evidence", "unresolved_issues"],
+  "additionalProperties": false,
+  "properties": {
+    "task_id": {"type": "string"},
+    "status": {"enum": ["completed", "blocked", "failed"]},
+    "changed_paths": {"type": "array", "items": {"type": "string"}},
+    "commands_run": {"type": "array"},
+    "verification_results": {"type": "array"},
+    "acceptance_evidence": {"type": "array"},
+    "unresolved_issues": {"type": "array"}
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Using OpenCode"
+  short_description: "Use and safely delegate through OpenCode"
+  default_prompt: "Use $using-opencode to handle this OpenCode request or route bounded local work with the required model and verification policy."
