@@ -6,6 +6,8 @@ All commands that dispatch these prompts must explicitly pass `--model opencode-
 
 Before dispatch, every prompt must define the objective, allowed reads, allowed writes, explicit exclusions, numbered actions, deliverables, acceptance criteria, verification, and stop conditions. Do not run OpenCode with unresolved placeholders or vague phrases such as "relevant files", "as needed", or "improve the codebase". For parallel work, complete these fields separately for every worker.
 
+Every routed prompt must also distinguish task-owned writes from the Router control-plane handoff. The worker may write only the exact task write paths and the exact Router-provided `handoff.json`; it must write the handoff for completed, blocked, and failed outcomes. Explicitly prohibit reading or editing `.Codex/`, `.codex/`, `.git/`, `AGENTS.md`, skills, memory files, manifests, router state, and sibling worker artifacts unless an exact path is deliberately authorized. State that repository instructions requesting memory updates do not apply to the worker; the parent agent owns memory.
+
 ## Audit Template
 
 ```text
@@ -21,6 +23,7 @@ Allowed writes:
 
 Out of scope:
 - Do not edit source files, databases, or any artifact other than the report.
+- Do not edit `.Codex/`, `.codex/`, `.git/`, `AGENTS.md`, skills, memory files, manifests, router state, or sibling worker artifacts.
 
 Your task is NOT to make code or data changes.
 Your task is to produce a deep audit with evidence.
@@ -47,6 +50,7 @@ Important requirements:
 Verification and stop conditions:
 - Confirm the report exists at the exact requested path.
 - If evidence is unavailable or scope is ambiguous, record the gap; do not infer unsupported findings.
+- For routed work, always write the exact Router-provided `handoff.json`, including when status is `blocked` or `failed`.
 
 When finished, print a concise terminal summary with:
 - <SUMMARY ITEM 1>

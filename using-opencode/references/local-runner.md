@@ -1,6 +1,6 @@
 # Bounded local runner
 
-Use this route for one or a few local workers. For many tasks, dependency waves, resumability, or independent auditors, switch to [task-router.md](task-router.md).
+Use this route for one to eight independent local workers, including parallel read-only audits and disjoint repairs. Worker count alone is not a reason to use Router. Switch to [task-router.md](task-router.md) only for dependencies, resumability, shared integration, critical writes, or explicitly requested independent model audits.
 
 ## Contract gate
 
@@ -40,4 +40,8 @@ Do not use `--continue` for independent workers. Do not fall back when the model
 
 ## Verify and report
 
-Inspect changed files and requested artifacts, run targeted checks, confirm all process exit states, and verify writes stayed within scope. Report what was delegated, what it produced, what was independently verified, and what remains uncertain.
+Inspect changed files and requested artifacts, run targeted checks once on the host after the wave, confirm all process exit states, and verify writes stayed within scope. For read-only reports, verify file existence plus a small evidence sample; do not launch another model solely to validate report formatting. For implementation, run the repository's real tests and inspect the diff. Report what was delegated, what it produced, what was independently verified, and what remains uncertain.
+
+Before dispatch, verify every command and path named in acceptance tests actually exists. Prefer `Get-Command`, `Test-Path`, or a harmless help/list invocation. Do not let a worker discover that the manifest references a stale module or missing test file.
+
+The parent agent, not workers, updates project memory. State explicitly: repository instructions requesting memory updates do not apply to the delegated worker.
